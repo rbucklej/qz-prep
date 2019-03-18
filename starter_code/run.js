@@ -15,10 +15,10 @@ console.log(q2);
 var q3 = quiz.question_03();
 console.log(q3);
 
-var q4 = quiz.question_04();
+var q4 = quiz.question_04({},{});
 console.log(q4);
 
-var q5 = quiz.question_05();
+var q5 = quiz.question_05({});
 console.log(q5);
 
 // ----------------------------------------
@@ -58,7 +58,7 @@ var carData= {
     }
 };
 
-var q6 = quiz.question_06(carData, 'BMW', 'series 3', 4 , 'red');
+var q6 = quiz.question_06(carData, "BMW", 'series 3', 4 , 'red');
 console.log(q6);
 
 var q7 = quiz.question_07(carData);

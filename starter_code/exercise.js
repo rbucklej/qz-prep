@@ -21,7 +21,7 @@ quiz.question_00 = function() {
   //   Return true or false.
   // ----------------------------------------
   var counter = 0;
-  return 'Error: Question 01 not implemented';
+  return false;
 };
 
 quiz.question_01 = function() {
@@ -29,7 +29,7 @@ quiz.question_01 = function() {
   //   QUESTION 01
   //   Return a string that says "Hello World!"
   // ----------------------------------------
-  return 'Error: Question 01 not implemented';
+  return "Hello World!";
 };
 
 quiz.question_02 = function() {
@@ -37,7 +37,8 @@ quiz.question_02 = function() {
   //   QUESTION 02
   //   Return an array of objects
   // ----------------------------------------
-  return 'Error: Question 02 not implemented';
+  var arr= [{9:"hi"},{0 :"39"},{23:"fj"},{21:"irj"}]
+  return arr
 };
 
 quiz.question_03 = function() {
@@ -47,7 +48,7 @@ quiz.question_03 = function() {
   //   Each object needs to have
   //   a 'shape' and 'color' property
   // ----------------------------------------
-  return 'Error: Question 03 not implemented';
+  return [{"shape":"circle","color":"blue"},{"shape":"square","color":"green"}];
 };
 
 quiz.question_04 = function(foo, bar) {
@@ -56,8 +57,20 @@ quiz.question_04 = function(foo, bar) {
   //   Return an object,
   //   each object property value must be a function
   // ----------------------------------------
-  return 'Error: Question 04 not implemented';
-};
+ foo.func =function(){
+    return 8*9
+  }
+  bar =function(){
+    return 1+3
+  }
+  return {foo,bar}
+  // return{foo :function(){
+  //   return 8*9
+  // }
+  
+  }
+  
+
 
 quiz.question_05 = function(someObject) {
   // ----------------------------------------
@@ -65,7 +78,8 @@ quiz.question_05 = function(someObject) {
   //   Add the property 'age' to someObject
   //   Give 'age' any value you like.
   // ----------------------------------------
-  return 'Error: Question 05 not implemented';
+  someObject.age=19
+  return someObject;
 };
 
 // ----------------------------------------
@@ -78,23 +92,53 @@ quiz.question_06 = function(data, carName, model, doors, color) {
   // as arguments to this function.
   // Return the price.
   // ---------------------------------------------------------------
-
-  var carPrice = 0;
   // TODO your code here
-
-  return carPrice;
-};
+  // var carName=carName
+  // return data.cars.carName;
+  return data.cars[carName][0].color[0].price}
 
 quiz.question_07 = function(data) {
+   var maxPricedCar = {price:0,};
+
+
   // ---------------------------------------------------------------
   // Find the maximum priced car from the data given in cardata variable
   // Return an object with properties: make, model, doors, price
   // ex: '{ make: 'Tesla', model: 'Model S', doors: 4, price: 80000 }'
-  // ---------------------------------------------------------------
-
-  var maxPricedCar = {};
-  // TODO your code here
-
+  Object.keys(data.cars).forEach(cars =>{
+    let carName = cars;
+    cars = data.cars[cars];
+    cars.forEach(car =>{
+      // Check if Price is on Element
+      if (!('price' in car) || (typeof car.price == 'undefined')){
+        if (!('color' in car) || (typeof car.color == 'undefined')){
+          throw new Error(`Neither 'color' nor 'price' keys are set, unable to ensure maximum price properly. Please verify data format.`);
+        }else{
+          car.color.forEach(color =>{
+            if (color.price > maxPricedCar.price){
+              maxPricedCar = {
+                make: car.make,
+                model: car.model,
+                doors: car.doors,
+                price: car.price
+              };
+            }
+          });
+        }
+      }else{
+        // Price is on Root Element
+        if (car.price > maxPricedCar.price){
+          maxPricedCar = {
+            make: carName,
+            model: car.model,
+            doors: car.doors,
+            price: car.price
+          };
+        }
+      }
+    })
+  });
+  
   return maxPricedCar;
 };
 
@@ -106,8 +150,8 @@ quiz.question_08 = function(data) {
   // ---------------------------------------------------------------
 
   // TODO your code here
-
-  return data;
+data.cars["Honda"]=[{model:'Civic',doors:4,price:18840}]
+  return data.cars["Honda"];
 };
 
 // ----------------------------------------
@@ -124,9 +168,9 @@ quiz.question_09 = function(input) {
   // Example input: [{ name: 'Bob', time: 45.00 }]
   // Example output: { 'Bob': 45.00 }
   // ---------------------------------------------------------------
-
   var obj = {};
-  input.forEach(function(/* TODO args */) {
+  input.forEach(function(array) {
+    obj[array.name]=array.time
     // TODO your code here
     // add name as key, time as value
   });
@@ -145,11 +189,11 @@ quiz.question_10 = function(input) {
   // ---------------------------------------------------------------
 
   var res = input
-    .filter(function(/* TODO args */) {
-      // TODO your code here
+    .filter(function(skier) {
+      return (skier.time<48.5)
     })
-    .map(function(/* TODO args */) {
-      // TODO your code here
+    .map(function(skier) {
+     return(skier.name)
     });
   return res;
 };
@@ -166,12 +210,12 @@ quiz.question_11 = function(input) {
   // ---------------------------------------------------------------
 
   var res = input.reduce(
-    function(/* TODO args */) {
-      // TODO your code here
+    function(previous, current) {
+      return previous+current+', '
     },
-    0 /* TODO set correct starting value */,
+    '' /* TODO set correct starting value */,
   );
-  return res;
+  return "'"+res.substring(0,res.length-2)+"'";
 };
 
 quiz.question_12 = function(input) {
@@ -184,8 +228,16 @@ quiz.question_12 = function(input) {
   // Example output: [{ name: 'Bob', time: 45.0 }, { name: 'Sue', time: 50.0 }]
   // ---------------------------------------------------------------
 
-  var compare = function(/* TODO args */) {
-    // TODO your code here
+  var compare = function(skier1,skier2) {
+    if (skier1.time<skier2.time){
+      return 1
+    }
+    if (skier1.time>skier2.time){
+      return -1
+    }
+    if (skier1.time===skier2.time){
+      return 0
+    }
   };
   return input.sort(compare);
 };
